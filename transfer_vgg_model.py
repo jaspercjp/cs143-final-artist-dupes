@@ -5,6 +5,7 @@ from torchvision import transforms
 from torchvision.models.vgg import VGG19_Weights
 from torchinfo import summary
 from torch.nn.functional import mse_loss
+
 from tqdm import tqdm
 import torch.optim as optim
 import matplotlib.pyplot as plt
@@ -42,6 +43,7 @@ class NTVGG19(nn.Module):
             x = layer(x)
             # TODO: Replace these numbers with a list of layers to record as an input to the model
             if i==17: # Choose layer(s) to get the content representation from
+                print(x.shape)
                 F.append((i, x))
             elif i in [11,13,15]: # Choose layers to get style representations from
                 G.append((i, Gram(x)))
@@ -95,11 +97,22 @@ for step in tqdm(range(num_steps), desc='Trasferring Style.'):
         F, G = model(x)# List of F's (as in Gaty's original paper), # List of G(ram matrice)'s 
         L_content = 0
         L_style = 0
+        
 
+        # this option uses mse loss which is elemnt-wise and most similar to gatys et.al
+        # for l in range(len(target_F)):
+        #     L_content += mse_loss(F[l][1], target_F[l][1])
+        # for l in range(len(target_G)):
+        #     L_style += mse_loss(G[l][1], target_G[l][1], reduction='mean').div(len(target_G))
+
+        # this option uses euclidian and frobenius norms, implementing Johnson et al's method
         for l in range(len(target_F)):
-            L_content += mse_loss(F[l][1], target_F[l][1])
+            CHW = target_F[l][1].shape[1] * target_F[l][1].shape[2] * target_F[l][1].shape[3]
+            L_content += (torch.norm(F[l][1] - target_F[l][1], p = 2) ** 2) / CHW
+
         for l in range(len(target_G)):
-            L_style += mse_loss(G[l][1], target_G[l][1], reduction='mean').div(len(target_G))
+            CHW = target_F[l][1].shape[1] * target_F[l][1].shape[2] * target_F[l][1].shape[3]
+            L_style += (torch.norm(G[l][1] - target_G[l][1], p = 'fro') ** 2) 
 
         loss = alpha*L_content + beta*L_style
         loss.backward()
