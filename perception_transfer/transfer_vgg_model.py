@@ -43,7 +43,7 @@ class NTVGG19(nn.Module):
             x = layer(x)
             # TODO: Replace these numbers with a list of layers to record as an input to the model
             if i==17: # Choose layer(s) to get the content representation from
-                print(x.shape)
+                # print(x.shape)
                 F.append((i, x))
             elif i in [11,13,15]: # Choose layers to get style representations from
                 G.append((i, Gram(x)))
