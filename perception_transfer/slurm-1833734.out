@@ -1,0 +1,42 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1833734
+##  Job Name : batch.sh
+##  Nodelist : gpu2102
+##      CPUs : 1
+##   Mem/CPU : 51200 MB
+## Directory : /oscar/home/syu66/Documents/cs143-final-artist-dupes/perception_transfer
+##   Job Started : Tue Apr 30 01:16:13 AM EDT 2024
+###############################################################################
+
+    Copy/Paste this in your local terminal to ssh tunnel with remote
+    -----------------------------------------------------------------
+    ssh -N -L 8529:172.20.217.2:8529 syu66@ssh.ccv.brown.edu
+    -----------------------------------------------------------------
+    Then open a browser on your local machine to the following address
+    ------------------------------------------------------------------
+    localhost:8529  (prefix w/ https:// if using password)
+    ------------------------------------------------------------------
+    
+Tue Apr 30 01:16:13 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 3090        On  | 00000000:01:00.0 Off |                  N/A |
+| 30%   30C    P8              33W / 350W |     62MiB / 24576MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A     55915      G   /usr/libexec/Xorg                            25MiB |
++---------------------------------------------------------------------------------------+
+  0%|          | 0/4319 [00:00<?, ?it/s]100%|██████████| 4319/4319 [00:00<00:00, 6040413.13it/s]
+Using cache found in /users/syu66/.cache/torch/hub/pytorch_vision_v0.10.0
+slurmstepd: error: *** JOB 1833734 ON gpu2102 CANCELLED AT 2024-04-30T01:23:28 ***

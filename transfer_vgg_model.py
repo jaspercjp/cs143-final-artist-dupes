@@ -3,12 +3,12 @@ import torch.nn as nn
 from PIL import Image
 from torchvision import transforms
 from torchvision.models.vgg import VGG19_Weights
-from torchinfo import summary
+# from torchinfo import summary
 from torch.nn.functional import mse_loss
 
 from tqdm import tqdm
 import torch.optim as optim
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
@@ -16,10 +16,10 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 # Calculates the Gram matrix used to compute style score
 def Gram(features):
     FF = features.clone()
-    batch_size, channels, height, width = features.size()
-    FF = FF.view(batch_size * channels, height * width)
+    1, channels, height, width = features.size()
+    FF = FF.view(1 * channels, height * width)
     g_matrix = torch.mm(FF, FF.t())
-    return g_matrix.div(batch_size * channels * height * width)
+    return g_matrix.div(1 * channels * height * width)
 
 # Class for the Neural Transfer model based on VGG19 (pre-trained)
 class NTVGG19(nn.Module):
