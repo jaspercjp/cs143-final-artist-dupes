@@ -6,6 +6,7 @@ import numpy as np
 from torch.utils.data import Dataset, DataLoader
 import pickle
 from tqdm import tqdm
+from hyperparameters import batch_size
 
 
 # Helper function to preprocess image into tensor from image path
@@ -48,7 +49,7 @@ def main():
     relative_root = '../data/'
     dataset = LandscapeDataset(relative_root=relative_root)
 
-    dataloader = DataLoader(dataset=dataset, batch_size=32, shuffle = True)
+    dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle = True)
 
     with open("data.pkl", 'wb') as f:
         pickle.dump(dataloader, f)

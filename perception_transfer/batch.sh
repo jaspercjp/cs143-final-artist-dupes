@@ -4,7 +4,7 @@
 #SBATCH --ntasks-per-node=1     # total number of tasks across all nodes
 #SBATCH --cpus-per-task=2       # cpu-cores per task (>1 if multi-threaded tasks)
 #SBATCH --mem-per-cpu=50G        # total memory per node (4 GB per cpu-core is default)
-#SBATCH -t 12:00:00             # total run time limit (HH:MM:SS)
+#SBATCH -t 24:00:00             # total run time limit (HH:MM:SS)
 #SBATCH --mail-type=begin       # send email when job begins
 #SBATCH --mail-type=end         # send email when job ends
 #SBATCH --mail-user=sean_yu@brown.edu

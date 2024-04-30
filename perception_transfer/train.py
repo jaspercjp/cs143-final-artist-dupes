@@ -6,6 +6,7 @@ import pickle
 from torch.optim import Adam
 from preprocess import load_image_as_tensor
 from tqdm import tqdm
+from hyperparameters import EPOCHS
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
@@ -96,8 +97,6 @@ def main():
     # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     # writer = SummaryWriter('runs/fashion_trainer_{}'.format(timestamp))
     epoch_number = 0
-
-    EPOCHS = 5
 
     best_vloss = 1_000_000.
 

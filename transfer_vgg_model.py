@@ -16,10 +16,10 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 # Calculates the Gram matrix used to compute style score
 def Gram(features):
     FF = features.clone()
-    1, channels, height, width = features.size()
-    FF = FF.view(1 * channels, height * width)
+    batch_size, channels, height, width = features.size()
+    FF = FF.view(batch_size * channels, height * width)
     g_matrix = torch.mm(FF, FF.t())
-    return g_matrix.div(1 * channels * height * width)
+    return g_matrix.div(batch_size * channels * height * width)
 
 # Class for the Neural Transfer model based on VGG19 (pre-trained)
 class NTVGG19(nn.Module):

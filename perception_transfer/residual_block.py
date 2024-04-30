@@ -18,7 +18,7 @@ class ResidualBlock(nn.Module):
 
         self.batch_norm1 = nn.BatchNorm2d(out_channels)
 
-        self.leaky_relu = nn.LeakyReLU()
+        self.relu = nn.ReLU()
 
         self.conv2 = nn.Conv2d(
             in_channels=out_channels,
@@ -47,7 +47,7 @@ class ResidualBlock(nn.Module):
         self.block = nn.Sequential(
             self.conv1, 
             self.batch_norm1, 
-            self.leaky_relu, 
+            self.relu, 
             self.conv2,
             self.batch_norm2, 
             #lacks the final addition to the identity
@@ -57,5 +57,5 @@ class ResidualBlock(nn.Module):
         identity = self.downsample(x) if self.downsample else x
         x = self.block(x)
 
-        return self.leaky_relu(x + identity)
+        return self.relu(x + identity)
 
