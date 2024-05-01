@@ -14,14 +14,20 @@ def load_image_as_tensor(im_path, l=256):
     preprocess = transforms.Compose([
         transforms.Resize((l, l)),
         transforms.ToTensor(),
-        transforms.Grayscale(num_output_channels=3),
-        # These normalization parameters are required by PyTorch's pre-trained VGG19
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+
+        # # These normalization parameters are required by PyTorch's pre-trained VGG19
+        # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     img = Image.open(im_path)
     img = img.convert('RGB')
     return preprocess(img).unsqueeze(0), img.size
 
+def vgg_normalize(im_tensor):
+    norm = transforms.Compose([
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    return norm(im_tensor)
+    
 
 # dataset class
 class LandscapeDataset(Dataset):

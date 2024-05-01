@@ -4,9 +4,10 @@ from transfer_vgg_model import NTVGG19
 from image_transform_net import ImageTransformer
 import pickle
 from torch.optim import Adam
-from preprocess import load_image_as_tensor
+from preprocess import load_image_as_tensor, vgg_normalize
 from tqdm import tqdm
 from hyperparameters import EPOCHS
+from torch.nn.functional import mse_loss
 
 device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
@@ -39,16 +40,10 @@ def loss_function(y_hat, y_original):
 
         F, G = loss_network(torch.unsqueeze(y_hat[i], 0))
 
-
-
         for l in range(len(target_F)):
-            CHW = target_F[l][1].shape[1] * target_F[l][1].shape[2] * target_F[l][1].shape[3]
-            L_content += (torch.norm(F[l][1] - target_F[l][1], p = 2) ** 2) / CHW
-
+            L_content += mse_loss(F[l][1], target_F[l][1])
         for l in range(len(target_G)):
-            # CHW = target_F[l][1].shape[1] * target_F[l][1].shape[2] * target_F[l][1].shape[3]
-            # print(G[l][1].shape)
-            L_style += (torch.norm(G[l][1] - target_G[l][1], p = 'fro') ** 2) 
+            L_style += mse_loss(G[l][1], target_G[l][1], reduction='mean').div(len(target_G))
     
     loss = alpha*L_content + beta*L_style
     return loss
@@ -68,14 +63,19 @@ def train_one_epoch():
         
         y_originals, _ = data
         y_originals = torch.squeeze(y_originals)
+
         # Zero your gradients for every batch!
         optimizer.zero_grad()
 
         # Make predictions for this batch
         y_hats = model(y_originals)
 
+        # normalizing the images to be compatible with vgg.
+        y_hats_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_hats])
+        y_originals_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_originals])
+
         # Compute the loss and its gradients
-        loss = loss_function(y_hats, y_originals)
+        loss = loss_function(y_hats_normalized, y_originals_normalized)
         loss.backward()
 
         # Adjust learning weights
@@ -93,6 +93,7 @@ def train_one_epoch():
 
 
 def main():
+
     # Initializing in a separate cell so we can easily add more epochs to the same run
     # timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     # writer = SummaryWriter('runs/fashion_trainer_{}'.format(timestamp))
