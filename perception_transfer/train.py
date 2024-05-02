@@ -23,6 +23,7 @@ loss_network = NTVGG19()
 loss_network.to(device)
 
 style_image, _ = load_image_as_tensor('sample-van-gogh.jpg')
+style_image = vgg_normalize(style_image)
 _, target_G = loss_network(style_image, input_type = 'style')
 
 
@@ -42,10 +43,12 @@ def loss_function(y_hat, y_original):
 
         for l in range(len(target_F)):
             L_content += mse_loss(F[l][1], target_F[l][1])
+
+        # style loss is weird.
         for l in range(len(target_G)):
             L_style += mse_loss(G[l][1], target_G[l][1], reduction='mean').div(len(target_G))
-    
-    loss = alpha*L_content + beta*L_style
+
+    loss = (alpha*L_content + beta*L_style)/len(y_hat)
     return loss
 
 

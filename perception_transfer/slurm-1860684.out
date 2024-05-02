@@ -1,0 +1,49 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1860684
+##  Job Name : batch.sh
+##  Nodelist : gpu2008
+##      CPUs : 1
+##   Mem/CPU : 51200 MB
+## Directory : /oscar/home/syu66/Documents/cs143-final-artist-dupes/perception_transfer
+##   Job Started : Wed May  1 04:56:23 PM EDT 2024
+###############################################################################
+
+    Copy/Paste this in your local terminal to ssh tunnel with remote
+    -----------------------------------------------------------------
+    ssh -N -L 9912:172.20.216.8:9912 syu66@ssh.ccv.brown.edu
+    -----------------------------------------------------------------
+    Then open a browser on your local machine to the following address
+    ------------------------------------------------------------------
+    localhost:9912  (prefix w/ https:// if using password)
+    ------------------------------------------------------------------
+    
+Wed May  1 16:56:23 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Quadro RTX 6000                On  | 00000000:41:00.0 Off |                  Off |
+| 33%   31C    P8               7W / 260W |     18MiB / 24576MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A     32722      G   /usr/libexec/Xorg                            16MiB |
++---------------------------------------------------------------------------------------+
+  0%|          | 0/24 [00:00<?, ?it/s]100%|██████████| 24/24 [00:00<00:00, 671088.64it/s]
+  0%|          | 0/24 [00:00<?, ?it/s]100%|██████████| 24/24 [00:00<00:00, 719023.54it/s]
+Using cache found in /users/syu66/.cache/torch/hub/pytorch_vision_v0.10.0
+EPOCH 1:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [00:26, 26.65s/it]Batch 1/1: 1it [00:26, 26.65s/it]
+batch 1 loss: 784722880.0
+Average loss for epoch: 784722880.0
+EPOCH 0, loss: 784722880.0
+torch.Size([1, 3, 330, 256])
+torch.Size([1, 3, 332, 256])

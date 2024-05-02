@@ -45,8 +45,12 @@ class LandscapeDataset(Dataset):
 
     def load_data(self):
         data = []
+        # i = 0
         for path in tqdm(os.listdir(self.relative_root)):
+            # if i == 32:
+            #     break
             data.append(path)
+            # i += 1
         return data
 
 

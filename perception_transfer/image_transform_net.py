@@ -7,23 +7,40 @@ class ImageTransformer(nn.Module):
 
         # two stride-2 convolutions to downsample
         self.down = nn.Sequential(
+            # first conv layer decreases the aliasing
             nn.Conv2d(
                 in_channels = in_channels,
-                out_channels = out_channels//2, 
-                kernel_size=3, 
-                stride=2,
-                padding=1
+                out_channels = 32, 
+                kernel_size=9, 
+                stride=1,
+                padding=4, 
+                padding_mode='reflect'
             ), 
-            nn.BatchNorm2d(out_channels//2),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
+
+            # second conv layer downsamples
             nn.Conv2d(
-                in_channels = out_channels//2,
-                out_channels = out_channels, 
+                in_channels = 32,
+                out_channels = 64, 
                 kernel_size=3, 
                 stride=2,
-                padding=1
+                padding=1, 
+                padding_mode='reflect'
             ), 
-            nn.BatchNorm2d(out_channels),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+
+            # third conv layer downsamples
+            nn.Conv2d(
+                in_channels = 64,
+                out_channels = 128, 
+                kernel_size=3, 
+                stride=2,
+                padding=1, 
+                padding_mode='reflect'
+            ), 
+            nn.BatchNorm2d(128),
             nn.ReLU(),
 
         )
@@ -41,26 +58,44 @@ class ImageTransformer(nn.Module):
 
         # upscale block
         self.up = nn.Sequential(
+            
+            # upsample 1
             nn.ConvTranspose2d(
-                in_channels = out_channels,
-                out_channels = out_channels//2, 
+                in_channels = 128,
+                out_channels = 64, 
+                kernel_size=3, 
+                stride=2, 
+                padding=1, 
+                output_padding=1
+            ), 
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+
+            # upsample 2
+            nn.ConvTranspose2d(
+                in_channels = 64,
+                out_channels = 32, 
                 kernel_size=3, 
                 stride=2,
                 padding=1, 
                 output_padding=1
             ), 
-            nn.BatchNorm2d(out_channels//2),
+            nn.BatchNorm2d(32),
             nn.ReLU(),
-            nn.ConvTranspose2d(
-                in_channels = out_channels//2,
+
+            # smooth
+            nn.Conv2d(
+                in_channels = 32,
                 out_channels = in_channels, 
-                kernel_size=3, 
-                stride=2,
-                padding=1, 
-                output_padding=1
+                kernel_size=9, 
+                stride=1,
+                padding=4, 
+                padding_mode='reflect'
             ), 
-            nn.ReLU(),
-            nn.BatchNorm2d(in_channels),
+            # nn.BatchNorm2d(in_channels),
+            # nn.Sigmoid(),
+
+
         )
 
     def forward(self, x):

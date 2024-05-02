@@ -1,0 +1,144 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1861781
+##  Job Name : batch.sh
+##  Nodelist : gpu2114
+##      CPUs : 1
+##   Mem/CPU : 51200 MB
+## Directory : /oscar/home/syu66/Documents/cs143-final-artist-dupes/perception_transfer
+##   Job Started : Wed May  1 11:50:20 PM EDT 2024
+###############################################################################
+
+    Copy/Paste this in your local terminal to ssh tunnel with remote
+    -----------------------------------------------------------------
+    ssh -N -L 9653:172.20.217.14:9653 syu66@ssh.ccv.brown.edu
+    -----------------------------------------------------------------
+    Then open a browser on your local machine to the following address
+    ------------------------------------------------------------------
+    localhost:9653  (prefix w/ https:// if using password)
+    ------------------------------------------------------------------
+    
+Wed May  1 23:50:20 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 3090        On  | 00000000:41:00.0 Off |                  N/A |
+| 30%   30C    P8              33W / 350W |     13MiB / 24576MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A     46208      G   /usr/libexec/Xorg                             5MiB |
++---------------------------------------------------------------------------------------+
+  0%|          | 0/24 [00:00<?, ?it/s]100%|██████████| 24/24 [00:00<00:00, 98496.38it/s]
+  0%|          | 0/24 [00:00<?, ?it/s]100%|██████████| 24/24 [00:00<00:00, 95778.59it/s]
+Using cache found in /users/syu66/.cache/torch/hub/pytorch_vision_v0.10.0
+EPOCH 1:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:39, 279.00s/it]Batch 1/1: 1it [04:39, 279.00s/it]
+batch 1 loss: 69868464.0
+Average loss for epoch: 69868464.0
+EPOCH 0, loss: 69868464.0
+EPOCH 2:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.15s/it]Batch 1/1: 1it [04:37, 277.16s/it]
+batch 1 loss: 1427043328.0
+Average loss for epoch: 1427043328.0
+EPOCH 1, loss: 1427043328.0
+EPOCH 3:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.02s/it]Batch 1/1: 1it [04:37, 277.04s/it]
+batch 1 loss: 87108672.0
+Average loss for epoch: 87108672.0
+EPOCH 2, loss: 87108672.0
+EPOCH 4:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:33, 273.68s/it]Batch 1/1: 1it [04:33, 273.68s/it]
+batch 1 loss: 117474728.0
+Average loss for epoch: 117474728.0
+EPOCH 3, loss: 117474728.0
+EPOCH 5:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:33, 273.31s/it]Batch 1/1: 1it [04:33, 273.31s/it]
+batch 1 loss: 110839896.0
+Average loss for epoch: 110839896.0
+EPOCH 4, loss: 110839896.0
+EPOCH 6:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:39, 279.86s/it]Batch 1/1: 1it [04:39, 279.86s/it]
+batch 1 loss: 132343368.0
+Average loss for epoch: 132343368.0
+EPOCH 5, loss: 132343368.0
+EPOCH 7:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:38, 278.55s/it]Batch 1/1: 1it [04:38, 278.55s/it]
+batch 1 loss: 96316328.0
+Average loss for epoch: 96316328.0
+EPOCH 6, loss: 96316328.0
+EPOCH 8:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:34, 274.01s/it]Batch 1/1: 1it [04:34, 274.01s/it]
+batch 1 loss: 58709956.0
+Average loss for epoch: 58709956.0
+EPOCH 7, loss: 58709956.0
+EPOCH 9:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:33, 273.98s/it]Batch 1/1: 1it [04:33, 273.99s/it]
+batch 1 loss: 35308436.0
+Average loss for epoch: 35308436.0
+EPOCH 8, loss: 35308436.0
+EPOCH 10:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:38, 278.03s/it]Batch 1/1: 1it [04:38, 278.03s/it]
+batch 1 loss: 27908938.0
+Average loss for epoch: 27908938.0
+EPOCH 9, loss: 27908938.0
+EPOCH 11:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.80s/it]Batch 1/1: 1it [04:37, 277.81s/it]
+batch 1 loss: 23439984.0
+Average loss for epoch: 23439984.0
+EPOCH 10, loss: 23439984.0
+EPOCH 12:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.32s/it]Batch 1/1: 1it [04:37, 277.33s/it]
+batch 1 loss: 16688721.0
+Average loss for epoch: 16688721.0
+EPOCH 11, loss: 16688721.0
+EPOCH 13:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.68s/it]Batch 1/1: 1it [04:37, 277.69s/it]
+batch 1 loss: 10748458.0
+Average loss for epoch: 10748458.0
+EPOCH 12, loss: 10748458.0
+EPOCH 14:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:36, 276.47s/it]Batch 1/1: 1it [04:36, 276.47s/it]
+batch 1 loss: 6854963.5
+Average loss for epoch: 6854963.5
+EPOCH 13, loss: 6854963.5
+EPOCH 15:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.75s/it]Batch 1/1: 1it [04:37, 277.75s/it]
+batch 1 loss: 4779461.5
+Average loss for epoch: 4779461.5
+EPOCH 14, loss: 4779461.5
+EPOCH 16:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.95s/it]Batch 1/1: 1it [04:37, 277.95s/it]
+batch 1 loss: 3714318.0
+Average loss for epoch: 3714318.0
+EPOCH 15, loss: 3714318.0
+EPOCH 17:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.71s/it]Batch 1/1: 1it [04:37, 277.71s/it]
+batch 1 loss: 3513324.0
+Average loss for epoch: 3513324.0
+EPOCH 16, loss: 3513324.0
+EPOCH 18:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:37, 277.24s/it]Batch 1/1: 1it [04:37, 277.24s/it]
+batch 1 loss: 4021013.75
+Average loss for epoch: 4021013.75
+EPOCH 17, loss: 4021013.75
+EPOCH 19:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:32, 272.46s/it]Batch 1/1: 1it [04:32, 272.47s/it]
+batch 1 loss: 4727297.0
+Average loss for epoch: 4727297.0
+EPOCH 18, loss: 4727297.0
+EPOCH 20:
+Batch 1/1: 0it [00:00, ?it/s]Batch 1/1: 1it [04:32, 272.62s/it]Batch 1/1: 1it [04:32, 272.62s/it]
+batch 1 loss: 4917575.0
+Average loss for epoch: 4917575.0
+EPOCH 19, loss: 4917575.0
+torch.Size([1, 3, 330, 256])
+torch.Size([1, 3, 332, 256])

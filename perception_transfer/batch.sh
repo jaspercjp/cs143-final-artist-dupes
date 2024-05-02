@@ -29,4 +29,6 @@ nvidia-smi
 module load miniconda3/23.11.0s
 source /oscar/runtime/software/external/miniconda3/23.11.0/etc/profile.d/conda.sh
 conda activate torchenv
+python3 preprocess.py
 python3 train.py
+python3 test.py
