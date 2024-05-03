@@ -16,7 +16,7 @@ def load_image_as_tensor(im_path, l=256):
         transforms.ToTensor(),
 
         # # These normalization parameters are required by PyTorch's pre-trained VGG19
-        # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
     img = Image.open(im_path)
     img = img.convert('RGB')
@@ -60,7 +60,8 @@ def main():
     with open("data.pkl", 'wb') as f:
         pickle.dump(dataloader, f)
 
-main()
+if __name__ == "__main__":
+    main()
 
 
     

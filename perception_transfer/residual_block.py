@@ -13,7 +13,7 @@ class ResidualBlock(nn.Module):
             in_channels=in_channels,
             out_channels=out_channels,
             kernel_size=(3, 3),
-            padding='same',
+            padding=1,
         )
 
         self.batch_norm1 = nn.BatchNorm2d(out_channels)
@@ -24,7 +24,7 @@ class ResidualBlock(nn.Module):
             in_channels=out_channels,
             out_channels=out_channels,
             kernel_size=(3, 3),
-            padding='same',
+            padding=1,
         )
 
         self.batch_norm2 = nn.BatchNorm2d(out_channels)
@@ -37,7 +37,7 @@ class ResidualBlock(nn.Module):
                     in_channels=in_channels, 
                     out_channels = out_channels,
                     kernel_size = (3, 3),
-                    padding = 'same'
+                    padding = 1
                 ),
                 nn.BatchNorm2d(out_channels = out_channels)
             )
