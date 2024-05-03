@@ -3,7 +3,7 @@ import torch.nn as nn
 from PIL import Image
 from torchvision import transforms
 from torchvision.models.vgg import VGG19_Weights
-# from torchinfo import summary
+from torchinfo import summary
 from torch.nn.functional import mse_loss
 
 from tqdm import tqdm
@@ -17,9 +17,10 @@ device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cp
 def Gram(features):
     FF = features.clone()
     batch_size, channels, height, width = features.size()
-    FF = FF.view(batch_size * channels, height * width)
+    print("Gram Mat Features Size:", features.size())
+    FF = FF.view(batch_size, channels, height * width)
     g_matrix = torch.mm(FF, FF.t())
-    return g_matrix.div(batch_size * channels * height * width)
+    return g_matrix.div(channels * height * width)
 
 # Class for the Neural Transfer model based on VGG19 (pre-trained)
 class NTVGG19(nn.Module):
@@ -42,10 +43,9 @@ class NTVGG19(nn.Module):
         for i,layer in enumerate(self.features):
             x = layer(x)
             # TODO: Replace these numbers with a list of layers to record as an input to the model
-            if i==17: # Choose layer(s) to get the content representation from
-                print(x.shape)
+            if i==13: # Choose layer(s) to get the content representation from
                 F.append((i, x))
-            elif i in [11,13,15]: # Choose layers to get style representations from
+            if i in [8, 11, 13]: # Choose layers to get style representations from
                 G.append((i, Gram(x)))
         return F, G
 
@@ -71,8 +71,8 @@ print("Content Image Mean:", content_im.max())
 model = NTVGG19()
 model.to(device)
 
-#summary(model, content_im.shape)
-#exit()
+summary(model, content_im.shape)
+exit()
 
 target_F, _ = model(content_im, input_type='content')
 _, target_G = model(style_im, input_type='style')
