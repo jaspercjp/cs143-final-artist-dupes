@@ -14,7 +14,7 @@ class ImageTransformer(nn.Module):
                 kernel_size=9, 
                 stride=1,
                 padding=4, 
-                padding_mode='reflect'
+                # padding_mode='reflect'
             ), 
             nn.BatchNorm2d(32),
             nn.ReLU(),
@@ -26,7 +26,7 @@ class ImageTransformer(nn.Module):
                 kernel_size=3, 
                 stride=2,
                 padding=1, 
-                padding_mode='reflect'
+                # padding_mode='reflect'
             ), 
             nn.BatchNorm2d(64),
             nn.ReLU(),
@@ -38,7 +38,7 @@ class ImageTransformer(nn.Module):
                 kernel_size=3, 
                 stride=2,
                 padding=1, 
-                padding_mode='reflect'
+                # padding_mode='reflect'
             ), 
             nn.BatchNorm2d(128),
             nn.ReLU(),
@@ -90,7 +90,7 @@ class ImageTransformer(nn.Module):
                 kernel_size=9, 
                 stride=1,
                 padding=4, 
-                padding_mode='reflect'
+                # padding_mode='reflect'
             ), 
             # nn.BatchNorm2d(in_channels),
             # nn.Sigmoid(),

@@ -9,7 +9,7 @@ test_image = "sample-nature.jpg"
 
 def main():
     model = ImageTransformer()
-    model.load_state_dict(torch.load("model.pt"))
+    model.load_state_dict(torch.load("model_0.pt"))
     model.eval()
 
     test_tensor, shape = load_image_as_tensor(test_image)

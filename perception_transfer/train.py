@@ -23,7 +23,7 @@ loss_network = NTVGG19()
 loss_network.to(device)
 
 style_image, _ = load_image_as_tensor('sample-van-gogh.jpg')
-style_image = vgg_normalize(style_image)
+# style_image = vgg_normalize(style_image)
 _, target_G = loss_network(style_image, input_type = 'style')
 
 
@@ -74,11 +74,11 @@ def train_one_epoch():
         y_hats = model(y_originals)
 
         # normalizing the images to be compatible with vgg.
-        y_hats_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_hats])
-        y_originals_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_originals])
+        # y_hats_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_hats])
+        # y_originals_normalized = torch.stack([vgg_normalize(img_tensor) for img_tensor in y_originals])
 
         # Compute the loss and its gradients
-        loss = loss_function(y_hats_normalized, y_originals_normalized)
+        loss = loss_function(y_hats, y_originals)
         loss.backward()
 
         # Adjust learning weights
@@ -91,6 +91,7 @@ def train_one_epoch():
 
         print('batch {} loss: {}'.format(i + 1, loss.item()))
 
+    
     print('Average loss for epoch: {}'.format(running_loss/num_batches))
     return running_loss/num_batches
 
@@ -139,7 +140,7 @@ def main():
         #     best_vloss = avg_vloss
         #     model_path = 'model_{}_{}'.format(timestamp, epoch_number)
         #     torch.save(model.state_dict(), model_path)
-
+        torch.save(model.state_dict(), f'model_{epoch_number}.pt')
         epoch_number += 1
     torch.save(model.state_dict(), 'model.pt')
 main()

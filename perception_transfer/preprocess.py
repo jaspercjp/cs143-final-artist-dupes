@@ -14,7 +14,7 @@ def load_image_as_tensor(im_path, l=256):
     preprocess = transforms.Compose([
         transforms.Resize((l, l)),
         transforms.ToTensor(),
-
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         # # These normalization parameters are required by PyTorch's pre-trained VGG19
         # transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
@@ -45,18 +45,19 @@ class LandscapeDataset(Dataset):
 
     def load_data(self):
         data = []
-        # i = 0
+        i = 0
         for path in tqdm(os.listdir(self.relative_root)):
-            # if i == 32:
-            #     break
+            if i == 32:
+                break
             data.append(path)
-            # i += 1
+            i += 1
         return data
 
 
 
 def main():
-    relative_root = '../data/'
+    relative_root = '../test_data'
+    # relative_root = '../data/'
     dataset = LandscapeDataset(relative_root=relative_root)
 
     dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle = True)

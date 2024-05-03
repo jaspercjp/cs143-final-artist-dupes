@@ -1,0 +1,183 @@
+## SLURM PROLOG ###############################################################
+##    Job ID : 1862330
+##  Job Name : batch.sh
+##  Nodelist : gpu2114
+##      CPUs : 1
+##   Mem/CPU : 51200 MB
+## Directory : /oscar/home/syu66/Documents/cs143-final-artist-dupes/perception_transfer
+##   Job Started : Thu May  2 02:31:25 AM EDT 2024
+###############################################################################
+
+    Copy/Paste this in your local terminal to ssh tunnel with remote
+    -----------------------------------------------------------------
+    ssh -N -L 8956:172.20.217.14:8956 syu66@ssh.ccv.brown.edu
+    -----------------------------------------------------------------
+    Then open a browser on your local machine to the following address
+    ------------------------------------------------------------------
+    localhost:8956  (prefix w/ https:// if using password)
+    ------------------------------------------------------------------
+    
+Thu May  2 02:31:25 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.129.03             Driver Version: 535.129.03   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 3090        On  | 00000000:41:00.0 Off |                  N/A |
+| 30%   31C    P8              33W / 350W |     13MiB / 24576MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|    0   N/A  N/A     46208      G   /usr/libexec/Xorg                             5MiB |
++---------------------------------------------------------------------------------------+
+  0%|          | 0/4319 [00:00<?, ?it/s]100%|██████████| 4319/4319 [00:00<00:00, 827253.58it/s]
+  0%|          | 0/4319 [00:00<?, ?it/s]100%|██████████| 4319/4319 [00:00<00:00, 829222.69it/s]
+Using cache found in /users/syu66/.cache/torch/hub/pytorch_vision_v0.10.0
+EPOCH 1:
+Batch 1/135: 0it [00:00, ?it/s]Batch 1/135: 1it [06:12, 372.64s/it]Batch 1/135: 2it [12:22, 370.73s/it]Batch 1/135: 3it [18:31, 369.93s/it]Batch 1/135: 4it [24:39, 369.56s/it]Batch 1/135: 5it [30:48, 369.04s/it]Batch 1/135: 6it [36:57, 369.07s/it]Batch 1/135: 7it [43:05, 368.96s/it]Batch 1/135: 8it [49:14, 368.84s/it]Batch 1/135: 9it [55:24, 369.04s/it]Batch 1/135: 10it [1:01:32, 368.72s/it]Batch 1/135: 11it [1:07:40, 368.63s/it]Batch 1/135: 12it [1:13:47, 368.16s/it]Batch 1/135: 13it [1:19:55, 368.24s/it]Batch 1/135: 14it [1:26:03, 368.10s/it]Batch 1/135: 15it [1:32:11, 367.97s/it]Batch 1/135: 16it [1:38:17, 367.53s/it]Batch 1/135: 17it [1:44:24, 367.33s/it]Batch 1/135: 18it [1:50:32, 367.52s/it]Batch 1/135: 19it [1:56:40, 367.53s/it]Batch 1/135: 20it [2:02:46, 367.22s/it]Batch 1/135: 21it [2:08:53, 366.92s/it]Batch 1/135: 22it [2:15:01, 367.31s/it]Batch 1/135: 23it [2:21:09, 367.55s/it]Batch 1/135: 24it [2:27:17, 367.82s/it]Batch 1/135: 25it [2:33:25, 367.81s/it]Batch 1/135: 26it [2:39:33, 367.73s/it]Batch 1/135: 27it [2:45:40, 367.70s/it]Batch 1/135: 28it [2:51:48, 367.81s/it]Batch 1/135: 29it [2:57:55, 367.49s/it]Batch 1/135: 30it [3:04:02, 367.25s/it]Batch 1/135: 31it [3:10:09, 367.36s/it]Batch 1/135: 32it [3:16:18, 367.72s/it]Batch 1/135: 33it [3:22:26, 367.73s/it]Batch 1/135: 34it [3:28:34, 367.75s/it]Batch 1/135: 35it [3:34:42, 367.90s/it]Batch 1/135: 36it [3:40:49, 367.67s/it]Batch 1/135: 37it [3:46:59, 368.33s/it]Batch 1/135: 38it [3:53:06, 368.04s/it]Batch 1/135: 39it [3:59:13, 367.76s/it]Batch 1/135: 40it [4:05:20, 367.38s/it]Batch 1/135: 41it [4:11:27, 367.35s/it]Batch 1/135: 42it [4:17:33, 366.94s/it]Batch 1/135: 43it [4:23:40, 367.01s/it]Batch 1/135: 44it [4:29:48, 367.11s/it]Batch 1/135: 45it [4:35:53, 366.66s/it]Batch 1/135: 46it [4:41:58, 366.15s/it]Batch 1/135: 47it [4:48:05, 366.32s/it]Batch 1/135: 48it [4:54:08, 365.49s/it]Batch 1/135: 49it [5:00:15, 365.87s/it]Batch 1/135: 50it [5:06:19, 365.40s/it]Batch 1/135: 51it [5:12:26, 365.72s/it]Batch 1/135: 52it [5:18:32, 365.95s/it]Batch 1/135: 53it [5:24:39, 366.20s/it]Batch 1/135: 54it [5:30:47, 366.68s/it]Batch 1/135: 55it [5:36:54, 366.78s/it]Batch 1/135: 56it [5:43:01, 366.98s/it]Batch 1/135: 57it [5:49:08, 366.87s/it]Batch 1/135: 58it [5:55:15, 366.92s/it]Batch 1/135: 59it [6:01:21, 366.77s/it]Batch 1/135: 60it [6:07:28, 366.70s/it]Batch 1/135: 61it [6:13:35, 366.69s/it]Batch 1/135: 62it [6:19:40, 366.39s/it]Batch 1/135: 63it [6:25:47, 366.33s/it]Batch 1/135: 64it [6:31:53, 366.36s/it]Batch 1/135: 65it [6:38:00, 366.65s/it]Batch 1/135: 66it [6:44:07, 366.53s/it]Batch 1/135: 67it [6:50:14, 366.75s/it]Batch 1/135: 68it [6:56:21, 366.76s/it]Batch 1/135: 69it [7:02:28, 366.93s/it]Batch 1/135: 70it [7:08:34, 366.61s/it]Batch 1/135: 71it [7:14:40, 366.58s/it]Batch 1/135: 72it [7:20:47, 366.69s/it]Batch 1/135: 73it [7:26:54, 366.74s/it]Batch 1/135: 74it [7:33:01, 366.71s/it]Batch 1/135: 75it [7:39:08, 366.89s/it]Batch 1/135: 76it [7:45:15, 366.90s/it]Batch 1/135: 77it [7:51:24, 367.56s/it]Batch 1/135: 78it [7:57:32, 367.53s/it]Batch 1/135: 79it [8:03:39, 367.64s/it]Batch 1/135: 80it [8:09:48, 368.01s/it]Batch 1/135: 81it [8:15:58, 368.40s/it]Batch 1/135: 82it [8:22:06, 368.32s/it]Batch 1/135: 83it [8:28:13, 368.12s/it]Batch 1/135: 84it [8:34:20, 367.78s/it]Batch 1/135: 85it [8:40:28, 367.72s/it]Batch 1/135: 86it [8:46:37, 368.01s/it]Batch 1/135: 87it [8:52:45, 368.25s/it]Batch 1/135: 88it [8:58:54, 368.35s/it]Batch 1/135: 89it [9:05:03, 368.61s/it]Batch 1/135: 90it [9:11:11, 368.35s/it]Batch 1/135: 91it [9:17:19, 368.25s/it]Batch 1/135: 92it [9:23:28, 368.46s/it]Batch 1/135: 93it [9:29:36, 368.34s/it]Batch 1/135: 94it [9:35:45, 368.47s/it]Batch 1/135: 95it [9:41:54, 368.65s/it]Batch 1/135: 96it [9:48:02, 368.64s/it]Batch 1/135: 97it [9:54:11, 368.69s/it]Batch 1/135: 98it [10:00:21, 368.93s/it]Batch 1/135: 99it [10:06:30, 368.92s/it]Batch 1/135: 100it [10:12:38, 368.61s/it]Batch 1/135: 101it [10:18:46, 368.70s/it]Batch 1/135: 102it [10:24:54, 368.46s/it]Batch 1/135: 103it [10:31:03, 368.61s/it]Batch 1/135: 104it [10:37:13, 368.82s/it]Batch 1/135: 105it [10:43:21, 368.60s/it]Batch 1/135: 106it [10:49:29, 368.64s/it]Batch 1/135: 107it [10:55:38, 368.64s/it]Batch 1/135: 108it [11:01:48, 369.08s/it]Batch 1/135: 109it [11:07:59, 369.55s/it]Batch 1/135: 110it [11:14:08, 369.52s/it]Batch 1/135: 111it [11:20:17, 369.39s/it]Batch 1/135: 112it [11:26:28, 369.62s/it]Batch 1/135: 113it [11:32:37, 369.44s/it]Batch 1/135: 114it [11:38:45, 369.22s/it]Batch 1/135: 115it [11:44:55, 369.25s/it]Batch 1/135: 116it [11:51:05, 369.71s/it]Batch 1/135: 117it [11:57:14, 369.35s/it]Batch 1/135: 118it [12:03:21, 368.70s/it]Batch 1/135: 119it [12:09:28, 368.06s/it]Batch 1/135: 120it [12:15:35, 367.86s/it]Batch 1/135: 121it [12:21:41, 367.32s/it]Batch 1/135: 122it [12:27:48, 367.09s/it]Batch 1/135: 123it [12:33:55, 367.19s/it]Batch 1/135: 124it [12:40:02, 367.09s/it]Batch 1/135: 125it [12:46:10, 367.36s/it]Batch 1/135: 126it [12:52:16, 366.89s/it]Batch 1/135: 127it [12:58:23, 367.11s/it]Batch 1/135: 128it [13:04:31, 367.25s/it]Batch 1/135: 129it [13:10:38, 367.22s/it]Batch 1/135: 130it [13:16:46, 367.33s/it]Batch 1/135: 131it [13:22:52, 367.14s/it]Batch 1/135: 132it [13:28:58, 366.82s/it]Batch 1/135: 133it [13:35:05, 366.81s/it]Batch 1/135: 134it [13:41:12, 366.87s/it]Batch 1/135: 135it [13:47:08, 363.52s/it]Batch 1/135: 135it [13:47:08, 367.62s/it]
+batch 1 loss: 15436577.0
+batch 2 loss: 43027584.0
+batch 3 loss: 141832368.0
+batch 4 loss: 39196456.0
+batch 5 loss: 22876622.0
+batch 6 loss: 13306834.0
+batch 7 loss: 8654333.0
+batch 8 loss: 6176207.5
+batch 9 loss: 5480139.5
+batch 10 loss: 5043596.5
+batch 11 loss: 4152760.5
+batch 12 loss: 2738834.75
+batch 13 loss: 1829572.625
+batch 14 loss: 1458348.125
+batch 15 loss: 1578970.125
+batch 16 loss: 1706029.875
+batch 17 loss: 1684596.875
+batch 18 loss: 1394870.375
+batch 19 loss: 1074661.5
+batch 20 loss: 858680.5625
+batch 21 loss: 730282.875
+batch 22 loss: 692204.75
+batch 23 loss: 624429.375
+batch 24 loss: 598005.0625
+batch 25 loss: 534719.0625
+batch 26 loss: 484729.65625
+batch 27 loss: 495065.125
+batch 28 loss: 491251.46875
+batch 29 loss: 480950.5
+batch 30 loss: 432105.75
+batch 31 loss: 396929.625
+batch 32 loss: 336346.40625
+batch 33 loss: 367366.6875
+batch 34 loss: 314203.03125
+batch 35 loss: 327799.40625
+batch 36 loss: 345402.5
+batch 37 loss: 311136.5625
+batch 38 loss: 313188.6875
+batch 39 loss: 295654.84375
+batch 40 loss: 293366.125
+batch 41 loss: 275249.9375
+batch 42 loss: 264677.25
+batch 43 loss: 249940.140625
+batch 44 loss: 252117.625
+batch 45 loss: 230117.625
+batch 46 loss: 226246.921875
+batch 47 loss: 222489.5625
+batch 48 loss: 209558.015625
+batch 49 loss: 214464.84375
+batch 50 loss: 222566.203125
+batch 51 loss: 196369.640625
+batch 52 loss: 203732.9375
+batch 53 loss: 193589.375
+batch 54 loss: 182091.1875
+batch 55 loss: 183787.890625
+batch 56 loss: 182541.5
+batch 57 loss: 180413.84375
+batch 58 loss: 176130.578125
+batch 59 loss: 174433.03125
+batch 60 loss: 180222.671875
+batch 61 loss: 177512.09375
+batch 62 loss: 171640.5625
+batch 63 loss: 174089.59375
+batch 64 loss: 171501.015625
+batch 65 loss: 172225.609375
+batch 66 loss: 167564.34375
+batch 67 loss: 168796.921875
+batch 68 loss: 165721.171875
+batch 69 loss: 163674.28125
+batch 70 loss: 162215.09375
+batch 71 loss: 165675.5625
+batch 72 loss: 163702.1875
+batch 73 loss: 163568.84375
+batch 74 loss: 162397.953125
+batch 75 loss: 162434.015625
+batch 76 loss: 159543.53125
+batch 77 loss: 163158.03125
+batch 78 loss: 158860.796875
+batch 79 loss: 157002.84375
+batch 80 loss: 157273.390625
+batch 81 loss: 157517.71875
+batch 82 loss: 158101.8125
+batch 83 loss: 156376.359375
+batch 84 loss: 154506.953125
+batch 85 loss: 154639.03125
+batch 86 loss: 155202.703125
+batch 87 loss: 157141.890625
+batch 88 loss: 153924.859375
+batch 89 loss: 156133.921875
+batch 90 loss: 155246.828125
+batch 91 loss: 154514.671875
+batch 92 loss: 154622.09375
+batch 93 loss: 152359.796875
+batch 94 loss: 157376.59375
+batch 95 loss: 151305.09375
+batch 96 loss: 150651.640625
+batch 97 loss: 151684.265625
+batch 98 loss: 151678.328125
+batch 99 loss: 153212.859375
+batch 100 loss: 149929.609375
+batch 101 loss: 149079.453125
+batch 102 loss: 150200.265625
+batch 103 loss: 147480.71875
+batch 104 loss: 147930.75
+batch 105 loss: 149640.046875
+batch 106 loss: 148762.6875
+batch 107 loss: 148771.671875
+batch 108 loss: 147382.0
+batch 109 loss: 148827.234375
+batch 110 loss: 148186.703125
+batch 111 loss: 147739.671875
+batch 112 loss: 150528.484375
+batch 113 loss: 146980.28125
+batch 114 loss: 148255.109375
+batch 115 loss: 147576.328125
+batch 116 loss: 147734.09375
+batch 117 loss: 145790.515625
+batch 118 loss: 144865.75
+batch 119 loss: 143072.640625
+batch 120 loss: 144186.828125
+batch 121 loss: 146945.625
+batch 122 loss: 144123.5625
+batch 123 loss: 147112.625
+batch 124 loss: 144378.609375
+batch 125 loss: 144002.6875
+batch 126 loss: 144017.25
+batch 127 loss: 142672.671875
+batch 128 loss: 145417.234375
+batch 129 loss: 142884.234375
+batch 130 loss: 142042.453125
+batch 131 loss: 141936.625
+batch 132 loss: 141717.640625
+batch 133 loss: 141233.140625
+batch 134 loss: 141547.125
+batch 135 loss: 142120.9375
+Average loss for epoch: 2548842.5898148147
+EPOCH 0, loss: 2548842.5898148147
+EPOCH 2:
+Batch 1/135: 0it [00:00, ?it/s]Batch 1/135: 1it [06:07, 367.05s/it]Batch 1/135: 2it [12:11, 365.48s/it]Batch 1/135: 3it [18:16, 365.42s/it]Batch 1/135: 4it [24:23, 365.80s/it]Batch 1/135: 5it [30:28, 365.46s/it]Batch 1/135: 6it [36:34, 365.82s/it]Batch 1/135: 7it [42:41, 366.26s/it]Batch 1/135: 8it [48:48, 366.50s/it]Batch 1/135: 9it [54:55, 366.72s/it]Batch 1/135: 10it [1:01:02, 366.54s/it]Batch 1/135: 11it [1:07:08, 366.60s/it]Batch 1/135: 12it [1:13:15, 366.69s/it]Batch 1/135: 13it [1:19:22, 366.70s/it]Batch 1/135: 14it [1:25:29, 366.79s/it]Batch 1/135: 15it [1:31:35, 366.71s/it]Batch 1/135: 16it [1:37:42, 366.74s/it]Batch 1/135: 17it [1:43:48, 366.58s/it]Batch 1/135: 18it [1:49:54, 366.36s/it]Batch 1/135: 19it [1:56:00, 366.28s/it]Batch 1/135: 20it [2:02:07, 366.26s/it]Batch 1/135: 21it [2:08:13, 366.41s/it]slurmstepd: error: *** JOB 1862330 ON gpu2114 CANCELLED AT 2024-05-02T18:31:26 ***

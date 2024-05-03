@@ -1,4 +1,4 @@
-batch_size = 16
+batch_size = 32
 
-EPOCHS = 10
+EPOCHS = 1
 

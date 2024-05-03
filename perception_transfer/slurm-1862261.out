@@ -41,4 +41,4 @@ Thu May  2 01:36:24 2024
   0%|          | 0/4319 [00:00<?, ?it/s]100%|██████████| 4319/4319 [00:00<00:00, 841627.90it/s]
 Using cache found in /users/syu66/.cache/torch/hub/pytorch_vision_v0.10.0
 EPOCH 1:
-Batch 1/270: 0it [00:00, ?it/s]
+Batch 1/270: 0it [00:00, ?it/s]Batch 1/270: 1it [03:07, 187.55s/it]Batch 1/270: 2it [06:13, 186.45s/it]Batch 1/270: 3it [09:18, 186.00s/it]Batch 1/270: 4it [12:22, 185.22s/it]Batch 1/270: 5it [15:26, 184.68s/it]Batch 1/270: 6it [18:30, 184.40s/it]Batch 1/270: 7it [21:34, 184.28s/it]Batch 1/270: 8it [24:37, 183.92s/it]Batch 1/270: 9it [27:40, 183.76s/it]Batch 1/270: 10it [30:44, 183.58s/it]Batch 1/270: 11it [33:49, 184.16s/it]Batch 1/270: 12it [36:54, 184.27s/it]Batch 1/270: 13it [39:58, 184.30s/it]Batch 1/270: 14it [43:00, 183.68s/it]Batch 1/270: 15it [46:04, 183.84s/it]Batch 1/270: 16it [49:06, 183.28s/it]Batch 1/270: 17it [52:08, 182.87s/it]slurmstepd: error: *** JOB 1862261 ON gpu2114 CANCELLED AT 2024-05-02T02:30:31 ***
