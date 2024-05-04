@@ -96,7 +96,7 @@ def transfer(content_im_path, style_im_path, layer_num, patch_size, stride=1, nu
         loss.backward()
         optimizer.step()
     
-    return x.cpu().detach()
+    return x.cpu().detach(), content_im_shape
 
 if __name__ == "__main__":
     content_im_path = "../data/content-images/nature.jpg"

@@ -28,7 +28,7 @@ def load_image_as_tensor(im_path, l=256, crop=False):
     img = img.convert('RGB')
     return preprocess(img).unsqueeze(0), img.size
     
-def save_tensor_as_image(x, path):
+def save_tensor_as_image(x, shape, path):
     # Denormalize the output image
     output_img = x.clone().squeeze()
     mean = torch.tensor([0.485, 0.456, 0.406]).view(-1, 1, 1).cpu()
@@ -36,7 +36,8 @@ def save_tensor_as_image(x, path):
     output_img = output_img.mul(std).add(mean).clamp(0, 1)
     # Convert tensor to PIL image
     output_img = transforms.ToPILImage()(np.moveaxis(output_img.cpu().detach().numpy(), 0, -1))
-    # output_img = transforms.Resize((content_im_shape[1], content_im_shape[0]))(output_img)
+    output_img = transforms.Resize((shape[1], shape[0]))(output_img)
+    
     # Save or display the output image
     output_img.save(path)
     print(f"Saved image to {path}.")

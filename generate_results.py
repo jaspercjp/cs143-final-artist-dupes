@@ -26,6 +26,9 @@ model = ImageTransformerRef().to(device)
 model.load_state_dict(torch.load("feedforward-cnn-gram-matrix/model.pt"))
 model.eval()
 
+BASELINE_ITER = 500
+PATCH_ITER = 300
+
 for content_im_path in os.listdir(CONTENT_IM_DIR):
     for style_im_path in os.listdir(STYLE_IM_DIR):
         content_split = content_im_path.split(".")
@@ -33,32 +36,34 @@ for content_im_path in os.listdir(CONTENT_IM_DIR):
         res_name = content_split[0]+"-"+style_split[0]+"-"+style_split[1]+".jpg"
         
         # BASELINE GRAM MATRIX RESULTS
-        x_baseline = GramMatrixLossTransfer.transfer(os.path.join(CONTENT_IM_DIR, content_im_path), 
-                                              os.path.join(STYLE_IM_DIR, style_im_path), 
-                                              num_iter=2000, alpha=1, beta=1e7)
-        save_path = os.path.join(RESULTS_DIR, content_split[0], "baseline")
-        if not os.path.isdir(save_path):
-            print("NO FUNSD")
-            os.system("mkdir -p " + save_path)
-        save_tensor_as_image(x_baseline, os.path.join(save_path, res_name))
+        save_path = os.path.join(RESULTS_DIR, content_split[0])
+        baseline_path = os.path.join(save_path, "baseline-"+res_name)
+        if not os.path.isfile(baseline_path):
+	        x_baseline, shape = GramMatrixLossTransfer.transfer(os.path.join(CONTENT_IM_DIR, content_im_path), 
+		                                      os.path.join(STYLE_IM_DIR, style_im_path), 
+		                                      content_layers=[1], style_layers=[3,8,13,20],
+		                                      num_iter=BASELINE_ITER, alpha=1, beta=1e5, LAMBDA=1e-5)
+	        if not os.path.isdir(save_path):
+	            os.system("mkdir -p " + save_path)
+	        save_tensor_as_image(x_baseline, shape, baseline_path)
         
         # BASELINE CNN APPROX
-        x_baseline_cnn, shape = load_image_as_tensor(os.path.join(CONTENT_IM_DIR, content_im_path), l=256)
-        x_baseline_cnn = model(x_baseline_cnn.to(device))
-        save_path = os.path.join(RESULTS_DIR, content_split[0], "baseline-cnn")
-        if not os.path.isdir(save_path):
-            print("NO FUNSD")
-            os.system("mkdir -p " + save_path)
-        save_tensor_as_image(x_baseline_cnn.cpu(), os.path.join(save_path, res_name))
+        #x_baseline_cnn, shape = load_image_as_tensor(os.path.join(CONTENT_IM_DIR, content_im_path), l=256)
+        #x_baseline_cnn = model(x_baseline_cnn.to(device))
+        #save_path = os.path.join(RESULTS_DIR, content_split[0])
+        #if not os.path.isdir(save_path):
+        #    print("NO FUNSD")
+        #    os.system("mkdir -p " + save_path)
+        #save_tensor_as_image(x_baseline_cnn.cpu(), os.path.join(save_path, res_name))
         
         # PATCH-BASED RESULTS
-        x_patch = PatchBasedTransfer.transfer(os.path.join(CONTENT_IM_DIR, content_im_path), 
-                                              os.path.join(STYLE_IM_DIR, style_im_path), 
-                                              layer_num=11, patch_size=5,stride=3, 
-                                              num_iter=1000, _lambda=1e-2)
-        save_path = os.path.join(RESULTS_DIR, content_split[0], "patch")
-        if not os.path.isdir(save_path):
-            print("NO FUNSD")
-            os.system("mkdir -p " + save_path)
-        save_tensor_as_image(x_patch, os.path.join(save_path, res_name))
+        patch_path = os.path.join(save_path, "patch-"+res_name)
+        if not os.path.isfile(patch_path):
+            x_patch, shape = PatchBasedTransfer.transfer(os.path.join(CONTENT_IM_DIR, content_im_path), 
+                                                  os.path.join(STYLE_IM_DIR, style_im_path), 
+                                                  layer_num=11, patch_size=5,stride=3, 
+                                                  num_iter=PATCH_ITER, _lambda=3)
+            if not os.path.isdir(save_path):
+                os.system("mkdir -p " + save_path)
+            save_tensor_as_image(x_patch, shape, os.path.join(save_path, "patch-"+res_name))
         

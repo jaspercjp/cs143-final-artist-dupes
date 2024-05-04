@@ -15,7 +15,7 @@ sys.path.append("..")
 from transfer_vgg_model import VGG19
 from preprocess import load_image_as_tensor
 
-def transfer(content_im_path, style_im_path, content_layers=[8], style_layers=[8,13,20,29], num_iter=3000, alpha=1, beta=1e5):
+def transfer(content_im_path, style_im_path, content_layers=[8], style_layers=[8,13,20,29], num_iter=3000, alpha=1, beta=1e5, LAMBDA=1):
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     content_im, content_im_shape = load_image_as_tensor(content_im_path)
     content_im = content_im.to(device)
@@ -46,15 +46,20 @@ def transfer(content_im_path, style_im_path, content_layers=[8], style_layers=[8
                 L_content += mse_loss(F[l][1], target_F[l][1])
             for l in range(len(target_G)):
                 L_style += mse_loss(G[l][1], target_G[l][1])
-
-            loss = alpha*L_content + beta*L_style
+	    
+	        # Total Variation Regularization for smooth images
+            diff_i = torch.sum(torch.abs(x[:, :, :, 1:] - x[:, :, :, :-1]))
+            diff_j = torch.sum(torch.abs(x[:, :, 1:, :] - x[:, :, :-1, :]))
+            L_tv = (diff_i + diff_j)
+            
+            loss = alpha*L_content + beta*L_style + LAMBDA*L_tv
             loss.backward()
             
             # print(f"Iter={step} | content loss={alpha*L_content.item()} | style loss={beta*L_style.item()}")
             return loss
         optimizer.step(closure)
         
-    return x.cpu().detach()
+    return x.cpu().detach(), content_im_shape
 
 if __name__ == "__main__":
     content_im_path = "../data/content-images/nature.jpg"
