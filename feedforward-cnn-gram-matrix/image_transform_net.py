@@ -1,90 +1,25 @@
 import torch.nn as nn
-from residual_block import ResidualBlock
-
-class ImageTransformer(nn.Module):
-    def __init__(self, in_channels = 3, out_channels = 128, image_size = (256, 256)):
-        super().__init__()
-
-        # two stride-2 convolutions to downsample
-        self.down = nn.Sequential(
-            nn.Conv2d(
-                in_channels = in_channels,
-                out_channels = out_channels//2, 
-                kernel_size=2, 
-                stride=2,
-                padding=0
-            ), 
-            nn.BatchNorm2d(out_channels//2),
-            nn.ReLU(),
-            nn.Conv2d(
-                in_channels = out_channels//2,
-                out_channels = out_channels, 
-                kernel_size=2, 
-                stride=2,
-                padding=0
-            ), 
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(),
-
-        )
-
-        # 7 residual blocks?
-        self.residuals = nn.Sequential(
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-            ResidualBlock(in_channels= out_channels, out_channels=out_channels),
-        )
-
-        # upscale block
-        self.up = nn.Sequential(
-            nn.ConvTranspose2d(
-                in_channels = out_channels,
-                out_channels = out_channels//2, 
-                kernel_size=2, 
-                stride=2,
-                padding=0, 
-                output_padding=0
-            ), 
-            nn.BatchNorm2d(out_channels//2),
-            nn.ReLU(),
-            nn.ConvTranspose2d(
-                in_channels = out_channels//2,
-                out_channels = in_channels, 
-                kernel_size=2, 
-                stride=2,
-                padding=0, 
-                output_padding=0
-            ), 
-            # nn.Sigmoid()
-            #nn.ReLU(),
-            #nn.BatchNorm2d(in_channels),
-        )
-
-    def forward(self, x):
-        x = self.down(x)
-        x = self.residuals(x)
-        x = self.up(x)
-        return x
-        
 import torch
-import torch.nn as nn
+from torchinfo import summary
 
 # Conv Layer
 class ConvLayer(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride):
+    def __init__(self, in_channels, out_channels, kernel_size, stride, activation="silu"):
         super(ConvLayer, self).__init__()
         padding = kernel_size // 2
         self.reflection_pad = nn.ReflectionPad2d(padding)
+        if activation=="silu":
+            self.activation = nn.SiLU()
+        elif activation==None:
+            self.activation = lambda x: x
+        self.norm = nn.BatchNorm2d(out_channels)
         self.conv2d = nn.Conv2d(in_channels, out_channels, kernel_size, stride) #, padding)
 
     def forward(self, x):
-        out = self.reflection_pad(x)
-        out = self.conv2d(out)
-        return out
+        x = self.reflection_pad(x)
+        x = self.conv2d(x)
+        x = self.norm(x)
+        return self.activation(x)
 
 # Upsample Conv Layer
 class UpsampleConvLayer(nn.Module):
@@ -93,16 +28,18 @@ class UpsampleConvLayer(nn.Module):
         self.upsample = upsample
         if upsample:
             self.upsample = nn.Upsample(scale_factor=upsample, mode='nearest')
-        reflection_padding = kernel_size // 2
-        self.reflection_pad = nn.ReflectionPad2d(reflection_padding)
+        self.reflection_pad = nn.ReflectionPad2d(kernel_size//2)
         self.conv2d = nn.Conv2d(in_channels, out_channels, kernel_size, stride)
+        self.norm = nn.BatchNorm2d(out_channels)
+        self.silu = nn.SiLU()
 
     def forward(self, x):
         if self.upsample:
             x = self.upsample(x)
-        out = self.reflection_pad(x)
-        out = self.conv2d(out)
-        return out
+        x = self.reflection_pad(x)
+        x = self.conv2d(x)
+        x = self.norm(x)
+        return self.silu(x)
 
 # Residual Block
 #   adapted from pytorch tutorial
@@ -112,37 +49,21 @@ class ResidualBlock(nn.Module):
     def __init__(self, channels):
         super(ResidualBlock, self).__init__()
         self.conv1 = ConvLayer(channels, channels, kernel_size=3, stride=1)
-        self.in1 = nn.InstanceNorm2d(channels, affine=True)
-        self.relu = nn.ReLU()
-        self.conv2 = ConvLayer(channels, channels, kernel_size=3, stride=1)
-        self.in2 = nn.InstanceNorm2d(channels, affine=True)
+        self.conv2 = ConvLayer(channels, channels, kernel_size=3, stride=1, activation=None)
 
     def forward(self, x):
-        residual = x
-        out = self.relu(self.in1(self.conv1(x)))
-        out = self.in2(self.conv2(out))
-        out = out + residual
-        out = self.relu(out)
-        return out 
+        y = self.conv1(x)
+        return self.conv2(y) + x
 
-# https://github.com/dxyang/StyleTransfer/blob/master/style.py
+# Adapted from https://github.com/dxyang/StyleTransfer/blob/master/style.py
 class ImageTransformerRef(nn.Module):
     def __init__(self):
         super(ImageTransformerRef, self).__init__()
-        
-        # nonlineraity
-        self.relu = nn.ReLU()
-        self.tanh = nn.Tanh()
 
         # encoding layers
-        self.conv1 = ConvLayer(3, 32, kernel_size=9, stride=1)
-        self.in1_e = nn.InstanceNorm2d(32, affine=True)
-
-        self.conv2 = ConvLayer(32, 64, kernel_size=3, stride=2)
-        self.in2_e = nn.InstanceNorm2d(64, affine=True)
-
-        self.conv3 = ConvLayer(64, 128, kernel_size=3, stride=2)
-        self.in3_e = nn.InstanceNorm2d(128, affine=True)
+        self.in_layer = ConvLayer(3, 32, 9, 1)
+        self.down1 = ConvLayer(32, 64, 3, 2)
+        self.down2 = ConvLayer(64, 128, 3, 2)
 
         # residual layers
         self.res1 = ResidualBlock(128)
@@ -152,32 +73,31 @@ class ImageTransformerRef(nn.Module):
         self.res5 = ResidualBlock(128)
 
         # decoding layers
-        self.deconv3 = UpsampleConvLayer(128, 64, kernel_size=3, stride=1, upsample=2 )
-        self.in3_d = nn.InstanceNorm2d(64, affine=True)
-
-        self.deconv2 = UpsampleConvLayer(64, 32, kernel_size=3, stride=1, upsample=2 )
-        self.in2_d = nn.InstanceNorm2d(32, affine=True)
-
-        self.deconv1 = UpsampleConvLayer(32, 3, kernel_size=9, stride=1)
-        self.in1_d = nn.InstanceNorm2d(3, affine=True)
+        self.up2 = UpsampleConvLayer(128, 64, kernel_size=3, stride=1, upsample=2)
+        self.up1 = UpsampleConvLayer(64, 32, kernel_size=3, stride=1, upsample=2)
+        self.out_layer = ConvLayer(32, 3, 9, 1, activation=None)
 
     def forward(self, x):
         # encode
-        y = self.relu(self.in1_e(self.conv1(x)))
-        y = self.relu(self.in2_e(self.conv2(y)))
-        y = self.relu(self.in3_e(self.conv3(y)))
+        x = self.in_layer(x)
+        x = self.down1(x)
+        x = self.down2(x)
 
         # residual layers
-        y = self.res1(y)
-        y = self.res2(y)
-        y = self.res3(y)
-        y = self.res4(y)
-        y = self.res5(y)
+        x = self.res1(x)
+        x = self.res2(x)
+        x = self.res3(x)
+        x = self.res4(x)
+        x = self.res5(x)
 
         # decode
-        y = self.relu(self.in3_d(self.deconv3(y)))
-        y = self.relu(self.in2_d(self.deconv2(y)))
-        #y = self.tanh(self.in1_d(self.deconv1(y)))
-        y = self.deconv1(y)
+        x = self.up2(x)
+        x = self.up1(x)
+        x = self.out_layer(x)
 
-        return y
+        return x
+
+if __name__ == "__main__":
+    model = ImageTransformerRef()
+    summary(model, (5, 3, 256, 256))
+        

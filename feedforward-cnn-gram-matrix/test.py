@@ -2,21 +2,20 @@ import numpy as np
 import torch 
 from image_transform_net import ImageTransformerRef
 from preprocess import load_image_as_tensor
-#from transfer_vgg_model import load_image_as_tensor
 from PIL import Image
 from torchvision import transforms
 import torch.nn as nn
-from residual_block import ResidualBlock
 
 device = torch.device("cpu")
-test_image = "../data/00000002_(2).jpg"
-# test_image = "sample-nature.jpg"
+# est_image = "../data/landscape-ds/00000003_(2).jpg"
+# test_image = "../data/content-images/torii.jpg"
+test_image = "../data/content-images/donuts.jpg"
 # test_image = "../sample-monet.jpg"
 # test_image = "../sample-van-gogh.jpg"
 
 def main():
     model = ImageTransformerRef().to(device)
-    model.load_state_dict(torch.load("model.pt"))
+    model.load_state_dict(torch.load("lee-model.pt"))
     model.eval()
 
     test_tensor, shape = load_image_as_tensor(test_image, l=256)
@@ -33,7 +32,7 @@ def main():
     output_img = transforms.ToPILImage()(np.moveaxis(output_img.cpu().detach().numpy(), 0, -1))
     output_img = transforms.Resize((shape[1], shape[0]))(output_img)
     # Save or display the output image
-    output_img.save("test-stylized.jpg")
+    output_img.save("cnn-gram-matrix-torii-lee-breathe.jpg")
 
     print(out.shape)
 

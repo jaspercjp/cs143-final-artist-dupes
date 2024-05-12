@@ -30,7 +30,7 @@ def vgg_normalize(im_tensor):
     
 
 # dataset class
-class LandscapeDataset(Dataset):
+class MyDataset(Dataset):
     def __init__(self, relative_root):
         self.relative_root = relative_root
         self.data = self.load_data()
@@ -53,7 +53,7 @@ class LandscapeDataset(Dataset):
 
 def main():
     relative_root = '../data/'
-    dataset = LandscapeDataset(relative_root=relative_root)
+    dataset = MyDataset(relative_root=relative_root)
 
     dataloader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle = True)
 

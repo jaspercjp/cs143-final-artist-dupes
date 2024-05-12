@@ -1,1 +1,2 @@
-pytorch.venv/
+data/train2014
+data/train2014.zip
