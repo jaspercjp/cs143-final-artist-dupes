@@ -9,7 +9,7 @@ In their paper, Gatys et al. sought out to combine the semantic meaning of a con
 ### [Johnson et al.](https://arxiv.org/pdf/1603.08155)
 To expand on the ideas presented in Gatys et al., Johnson et al. sought to define a feed-forward neural network that essentially eliminated the need for the optimization of the loss function defined in Gatys et al. Essentially, the feed-forward neural network would learn the style of the style image given, and having learned the correct filters and down/upscaling parameters, it would then auto encode a content image to be in the style of the learned style. This cut down the time needed to produce a transformed image, instead replacing such a time cost with a training cost. 
 
-###[Chen et al](https://arxiv.org/pdf/1612.04337) 
+### [Chen et al](https://arxiv.org/pdf/1612.04337) 
 To expand on the ideas presented in Gatys et al, Chen et al. utilized the VGG19 model to extract feature maps from both the style and content images through a single layer. The core of this method is seen in the style swap function, where each patch of a defined size is extracted from the style feature maps, and is slid over the style features with a specified stride. To identify the best matching patches, the content features undergo a convolution operation with the normalized style patches to assess the compatibility between each patch and local regions in the content features. Then, the best matching patches are reconstructed into a style-transformed feature map with the spatial dimensions of the original content features through a transposed convolution operation. This transformation is further refined through an optimization process, where a loss function is minimized through style loss and total variation regularization.
 
 
